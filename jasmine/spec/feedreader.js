@@ -120,5 +120,29 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        const firstFeed=[];
+        const otherFeed=[];
+        const feed = document.querySelector('.feed');
+        beforeEach(function(done){
+            loadFeed(0);
+            Array.from(feed.children).forEach(function(entry){
+                    firstFeed.push(entry.innerText);
+            });
+            loadFeed(1, function(){
+                Array.from(feed.children).forEach(function(entry){
+                    otherFeed.push(entry.innerText);
+                });
+                done();
+            });
+        });
+
+        it('different Content',function(done){
+            otherFeed.forEach(function(other){
+                firstFeed.forEach(function(first){
+                   expect(other === first).toBe(false); 
+                });
+            });
+            done();
+        });
     });
 }());
