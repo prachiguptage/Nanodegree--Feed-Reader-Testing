@@ -102,15 +102,16 @@ $(function() {
         const otherFeed=[];
         const feed = document.querySelector('.feed');
         beforeEach(function(done){
-            loadFeed(0);
-            Array.from(feed.children).forEach(function(entry){
-                    firstFeed.push(entry.innerText);
-            });
-            loadFeed(1, function(){
+            loadFeed(0 ,function(){
                 Array.from(feed.children).forEach(function(entry){
-                    otherFeed.push(entry.innerText);
+                    firstFeed.push(entry.innerText);
                 });
-                done();
+                loadFeed(1, function(){
+                    Array.from(feed.children).forEach(function(entry){
+                        otherFeed.push(entry.innerText);
+                    });
+                    done();
+                });
             });
         });
 
